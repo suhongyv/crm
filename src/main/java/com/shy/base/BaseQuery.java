@@ -1,4 +1,4 @@
-package com.shsxt.base;
+package com.shy.base;
 
 public class BaseQuery {
 }

@@ -1,4 +1,4 @@
-package com.shsxt.base;
+package com.shy.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
