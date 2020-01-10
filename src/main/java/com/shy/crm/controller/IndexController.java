@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author suhongyv
+ */
 @Controller
 public class IndexController extends BaseController {
     @Autowired

@@ -1,5 +1,8 @@
 package com.shy.crm.model;
 
+/**
+ * @author suhongyv
+ */
 public class ResultInfo {
     private Integer code=200;
     private String msg;

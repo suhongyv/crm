@@ -1,7 +1,7 @@
 package com.shy.crm.exceptions;
 
 /**
- * 自定义参数异常
+ * 参数异常
  * @author suhongyv
  */
 public class ParamsException extends RuntimeException {

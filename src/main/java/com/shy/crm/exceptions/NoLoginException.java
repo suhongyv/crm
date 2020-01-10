@@ -1,7 +1,7 @@
 package com.shy.crm.exceptions;
 
 /**
- * 自定义参数异常
+ * 用户未登录异常
  * @author suhongyv
  */
 public class NoLoginException extends RuntimeException {

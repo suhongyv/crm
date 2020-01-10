@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 /**
+ * 全局异常
  * @author suhongyv
  */
 @Component
