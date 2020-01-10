@@ -22,25 +22,63 @@ public class UserService extends BaseService<User,Integer> {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 用户登录
+     * @param userName
+     * @param userPwd
+     * @return
+     */
     public UserModel userLogin(String userName,String userPwd){
+        //参数校验,判断参数是否为空
         checkLoginParams(userName,userPwd);
+        //根据用户名查询用户
         User user=userMapper.findUserByUserName(userName);
+        //判断用户是否存在
         AssertUtil.isTrue(null==user,"用户已注销或不存在");
+        //判断前台传的密码是否与数据库查的相同
         AssertUtil.isTrue(!(user.getUserPwd().equals(Md5Util.encode(userPwd))),"用户密码错误");
+        //返回UserModel对象
         return new UserModel(UserIDBase64.encoderUserID(user.getId()),user.getUserName(),user.getTrueName());
     }
+
+    /**
+     * 参数校验
+     * @param userName
+     * @param userPwd
+     */
     private void checkLoginParams(String userName, String userPwd) {
         AssertUtil.isTrue(StringUtils.isBlank(userName),"用户名不可为空!");
         AssertUtil.isTrue(StringUtils.isBlank(userPwd),"用户密码不可为空!");
     }
+
+    /**
+     * 密码更新
+     * @param userId
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword
+     */
+    //开启事务
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateUserPassword(Integer userId,String oldPassword,String newPassword,String confirmPassword){
+        //根据用户id查询用户
         User user = selectByPrimaryKey(userId);
+        //参数校验
         checkParams(userId,oldPassword,newPassword,confirmPassword,user);
+        //设置密码
         user.setUserPwd(Md5Util.encode(newPassword));
+        //更新密码
         AssertUtil.isTrue(updateByPrimaryKeySelective(user)<1,"密码更新失败!!");
     }
 
+    /**
+     * 参数校验
+     * @param userId
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword
+     * @param user
+     */
     private void checkParams(Integer userId, String oldPassword, String newPassword, String confirmPassword,User user) {
         AssertUtil.isTrue(null==userId||user==null,"用户未登录或不存在");
         AssertUtil.isTrue(StringUtils.isBlank(oldPassword),"请输入旧密码!!!");

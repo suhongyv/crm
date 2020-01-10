@@ -1,6 +1,5 @@
 package com.shy.crm.controller;
 import com.shy.base.BaseController;
-import com.shy.crm.exceptions.ParamsException;
 import com.shy.crm.model.ResultInfo;
 import com.shy.crm.model.UserModel;
 import com.shy.crm.service.UserService;
@@ -29,20 +28,8 @@ public class UserController extends BaseController {
     @RequestMapping("user/login")
     @ResponseBody
     public ResultInfo login(String userName,String userPwd){
-        ResultInfo resultInfo=new ResultInfo();
-        try {
-            UserModel userModel = userService.userLogin(userName, userPwd);
-            resultInfo.setResult(userModel);
-        } catch (ParamsException e) {
-            e.printStackTrace();
-            resultInfo.setCode(e.getCode());
-            resultInfo.setMsg(e.getMsg());
-        }catch (Exception e) {
-            e.printStackTrace();
-            resultInfo.setCode(500);
-            resultInfo.setMsg("faild");
-        }
-        return resultInfo;
+        UserModel userModel = userService.userLogin(userName, userPwd);
+       return success("用户登录成功",userModel);
     }
 
     /**
@@ -56,16 +43,7 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequestMapping("user/updatePassword")
     public ResultInfo updatePassword(HttpServletRequest request,String oldPassword,String newPassword,String confirmPassword){
-        ResultInfo resultInfo = new ResultInfo();
-        try {
-            userService.updateUserPassword(LoginUserUtil.releaseUserIdFromCookie(request),oldPassword,newPassword,confirmPassword);
-        } catch (ParamsException e) {
-            resultInfo.setMsg(e.getMsg());
-            resultInfo.setCode(e.getCode());
-        }catch (Exception e) {
-            resultInfo.setCode(500);
-            resultInfo.setMsg("Faild");
-        }
-        return resultInfo;
+        userService.updateUserPassword(LoginUserUtil.releaseUserIdFromCookie(request),oldPassword,newPassword,confirmPassword);
+        return success("密码更新成功");
     }
 }
