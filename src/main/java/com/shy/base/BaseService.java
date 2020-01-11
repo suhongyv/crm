@@ -1,8 +1,14 @@
 package com.shy.base;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.shy.crm.vo.SaleChance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseService<T,ID> {
 
@@ -98,5 +104,22 @@ public abstract class BaseService<T,ID> {
      */
     public Integer deleteBatch(ID[] ids) throws DataAccessException{
         return baseMapper.deleteBatch(ids);
+    }
+
+    /**
+     * 多条件查询for可修改表格
+     * @param baseQuery
+     * @return
+     */
+    public Map<String,Object> queryByParamsForDataGrid(BaseQuery baseQuery){
+        Map<String,Object> map=new HashMap<>();
+        //开启分页
+        PageHelper.startPage(baseQuery.getPage(),baseQuery.getRows());
+        //查询营销机会列表
+        PageInfo<T> pageInfo = new PageInfo<T>(selectByParams(baseQuery));
+        //把总数据数与机会列表放入到map中
+        map.put("total",pageInfo.getTotal());
+        map.put("rows",pageInfo.getList());
+        return map;
     }
 }

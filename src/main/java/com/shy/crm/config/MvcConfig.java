@@ -22,7 +22,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 初始化拦截器
+     * 初始化拦截器,试拦截器生效
      * @param registry
      */
     @Override
