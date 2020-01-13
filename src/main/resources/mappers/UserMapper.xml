@@ -21,6 +21,22 @@
     from t_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByParams" resultType="com.shy.crm.vo.User" parameterType="com.shy.crm.query.UserQuery">
+    select <include refid="Base_Column_List"/>
+    from t_user
+    <where>
+      is_valid=1
+      <if test="userName!=null and userName!=''">
+        and user_name=#{userName}
+      </if>
+      <if test="phone!=null and phone!=''">
+        and phone=#{phone}
+      </if>
+      <if test="trueName!=null and trueName!=''">
+        and true_name=#{trueName}
+      </if>
+    </where>
+  </select>
     <select id="findUserByUserName" resultType="com.shy.crm.vo.User">
       select <include refid="Base_Column_List"/>
       from t_user
@@ -30,7 +46,67 @@
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-
+    <insert id="insertHasKey" parameterType="com.shy.crm.vo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="userPwd != null" >
+                user_pwd,
+            </if>
+            <if test="trueName != null" >
+                true_name,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="isValid != null" >
+                is_valid,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null" >
+                #{userPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="trueName != null" >
+                #{trueName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="isValid != null" >
+                #{isValid,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
   <insert id="insertSelective" parameterType="com.shy.crm.vo.User" >
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >

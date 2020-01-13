@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
     /**
-     * 把拦截器交给spring
+     * 把拦截器交给容器
      * @return
      */
     @Bean
