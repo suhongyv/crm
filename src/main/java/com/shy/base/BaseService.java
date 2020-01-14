@@ -122,4 +122,6 @@ public abstract class BaseService<T,ID> {
         map.put("rows",pageInfo.getList());
         return map;
     }
+
+
 }

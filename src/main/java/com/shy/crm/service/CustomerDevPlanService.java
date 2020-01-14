@@ -68,13 +68,14 @@ public class CustomerDevPlanService extends BaseService<CustomerDevPlan,Integer>
     }
 
     /**
-     * 删除用户更新计划
-     * @param customerDevPlan
+     * 删除用户开发计划
+     * @param id
      */
-    public void deleteCustomerDevPlan(CustomerDevPlan customerDevPlan){
-        Integer id = customerDevPlan.getId();
-        AssertUtil.isTrue(id==null||selectByPrimaryKey(id)==null,"待删除记录不存在!!!");
+    public void deleteCustomerDevPlan(Integer id){
+        CustomerDevPlan customerDevPlan=selectByPrimaryKey(id);
+        AssertUtil.isTrue(id==null||customerDevPlan==null,"待删除记录不存在!!!");
         customerDevPlan.setIsValid(0);
         AssertUtil.isTrue(updateByPrimaryKeySelective(customerDevPlan)<1,"删除失败!!!");
     }
+
 }

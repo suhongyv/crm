@@ -20,6 +20,11 @@
     from t_cus_dev_plan
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByParams" resultType="com.shy.crm.vo.CustomerDevPlan" parameterType="com.shy.crm.query.CustomerDevPlanQuery">
+    select <include refid="Base_Column_List"/>
+    from t_cus_dev_plan
+    where is_valid=1 and sale_chance_id=#{SaleChanceId}
+  </select>
   <insert id="insertSelective" parameterType="com.shy.crm.vo.CustomerDevPlan" >
     insert into t_cus_dev_plan
     <trim prefix="(" suffix=")" suffixOverrides="," >

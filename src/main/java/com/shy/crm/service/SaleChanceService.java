@@ -111,4 +111,17 @@ public class SaleChanceService extends BaseService<SaleChance,Integer> {
         AssertUtil.isTrue(ids==null&&ids.length==0,"请选择带删除记录!!!");
         AssertUtil.isTrue(deleteBatch(ids)<ids.length,"删除失败");
     }
+
+    /**
+     * 更新开发结果
+     * @param saleChance
+     */
+    public void updateDevResult(SaleChance saleChance) {
+        AssertUtil.isTrue(saleChance.getId()==null,"待更新记录不存在!!!");
+        SaleChance temp=selectByPrimaryKey(saleChance.getId());
+        AssertUtil.isTrue(temp==null,"待更新记录不存在!!!");
+        AssertUtil.isTrue(temp.getState()==0||temp.getDevResult()!=1,"系统异常!!!");
+        AssertUtil.isTrue(updateByPrimaryKeySelective(saleChance)<1,"更新失败!!!");
+
+    }
 }

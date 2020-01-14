@@ -75,4 +75,16 @@ public class SaleChanceController extends BaseController {
         //返回成功数据
         return success("删除成功");
     }
+
+    /**
+     * 更新开发结果
+     * @param saleChance
+     * @return
+     */
+    @RequestMapping("updateDevResult")
+    @ResponseBody
+    public ResultInfo updateDevResult(SaleChance saleChance){
+        saleChanceService.updateDevResult(saleChance);
+        return success("更新成功!!!");
+    }
 }
