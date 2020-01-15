@@ -1,14 +1,18 @@
 package com.shy.crm.controller;
 
 import com.shy.base.BaseController;
+import com.shy.crm.service.PermissionService;
 import com.shy.crm.service.UserService;
 import com.shy.crm.utils.LoginUserUtil;
+import com.shy.crm.vo.Permission;
 import com.shy.crm.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author suhongyv
@@ -17,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexController extends BaseController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private PermissionService permissionService;
     /**
      * 登录页
      * @return
@@ -33,8 +39,9 @@ public class IndexController extends BaseController {
     @RequestMapping("main")
     public String main(HttpServletRequest request){
         int userId = LoginUserUtil.releaseUserIdFromCookie(request);
-        User user = userService.selectByPrimaryKey(userId);
-        request.setAttribute("user",user);
+        List<String> permissionList=permissionService.queryUserHasRolesHasPermissions(userId);
+        request.getSession().setAttribute("permissions",permissionList);
+        request.setAttribute("user",userService.selectByPrimaryKey(userId));
         return "main";
     }
 

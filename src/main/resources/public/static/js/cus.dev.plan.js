@@ -19,27 +19,26 @@ function formatterOp(value, rowData) {
 }
 
 function openCusDevPlanDialog() {
-    var recode = $("#dg").datagrid("getSelections")[0];
-    $("#fm").form("load", recode);
-    if (recode.devResult == 2 || recode.devResult == 3) {
-        $(".dlgbtn").attr("disabled","true");
-        $("#toolbar").show();
+    var recode =$("#dg").datagrid("getSelections")[0];
+    $("#fm").form("load",recode);
+
+    if(recode.devResult ==2 || recode.devResult ==3){
+        $("#toolbar").css("display","none");
         $("#dg02").edatagrid({
-            toolbar: "#toolbar",
-            url: ctx + "/cus_dev_plan/list?SaleChanceId=" + recode.id
+            url:ctx+"/cus_dev_plan/list?saleChanceId="+recode.id,
         });
         $("#dg02").edatagrid("disableEditing");
-    } else {
+    }else{
         $("#toolbar").show();
         $("#dg02").edatagrid({
-            toolbar: "#toolbar",
-            url: ctx + "/cus_dev_plan/list?SaleChanceId=" + recode.id,
-            saveUrl: ctx + "/cus_dev_plan/save?saleChanceId=" + recode.id,
-            updateUrl: ctx + "/cus_dev_plan/update",
-            destroyUrl: ctx + "/cus_dev_plan/delete"
+            toolbar:"#toolbar",
+            url:ctx+"/cus_dev_plan/list?saleChanceId="+recode.id,
+            saveUrl:ctx+"/cus_dev_plan/save?saleChanceId="+recode.id,
+            updateUrl:ctx+"/cus_dev_plan/update",
+            destroyUrl:ctx+"/cus_dev_plan/delete"
         });
     }
-    $("#dlg").dialog("open").dialog("setTitle", "开发计划项展示");
+    $("#dlg").dialog("open").dialog("setTitle","开发计划项展示");
 }
 
 function saveCusDevPlan() {

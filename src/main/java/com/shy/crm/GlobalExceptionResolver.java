@@ -1,6 +1,7 @@
 package com.shy.crm;
 
 import com.alibaba.fastjson.JSON;
+import com.shy.crm.exceptions.AuthFailedException;
 import com.shy.crm.exceptions.NoLoginException;
 import com.shy.crm.exceptions.ParamsException;
 import com.shy.crm.model.ResultInfo;
@@ -33,7 +34,6 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             modelAndView.addObject("msg",noLoginException.getMsg());
             modelAndView.addObject("ctx",httpServletRequest.getContextPath());
             return modelAndView;
-
         }
         /**方法返回值类型判断:
          *    如果方法级别存在@ResponseBody 方法响应内容为json  否则视图
@@ -59,6 +59,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                    ParamsException paramsException= (ParamsException) e;
                    modelAndView.addObject("msg",paramsException.getMsg());
                    modelAndView.addObject("code",paramsException.getCode());
+               }else if(e instanceof AuthFailedException){
+                   AuthFailedException authFailedException= (AuthFailedException) e;
+                   modelAndView.addObject("msg",authFailedException.getMsg());
+                   modelAndView.addObject("code",authFailedException.getCode());
                }
                return modelAndView;
             }else{
@@ -73,6 +77,10 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
                     ParamsException paramsException= (ParamsException) e;
                     resultInfo.setCode(paramsException.getCode());
                     resultInfo.setMsg(paramsException.getMsg());
+                }else if(e instanceof AuthFailedException){
+                    AuthFailedException authFailedException= (AuthFailedException) e;
+                    resultInfo.setCode(authFailedException.getCode());
+                    resultInfo.setMsg(authFailedException.getMsg());
                 }
                 httpServletResponse.setCharacterEncoding("utf-8");
                 httpServletResponse.setContentType("application/json;charset=utf-8");

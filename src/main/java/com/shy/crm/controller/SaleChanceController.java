@@ -1,6 +1,7 @@
 package com.shy.crm.controller;
 
 import com.shy.base.BaseController;
+import com.shy.crm.annotations.RequirePermission;
 import com.shy.crm.model.ResultInfo;
 import com.shy.crm.query.SaleChanceQuery;
 import com.shy.crm.service.SaleChanceService;
@@ -27,18 +28,21 @@ public class SaleChanceController extends BaseController {
     private UserService userService;
 
     @RequestMapping("index")
+    @RequirePermission(code="1010")
     public String index() {
         return "sale_chance";
     }
 
     @RequestMapping("list")
     @ResponseBody
+    @RequirePermission(code = "101001")
     public Map<String, Object> querySaleChanceByParams(SaleChanceQuery saleChanceQuery) {
         return saleChanceService.querySaleChanceByParams(saleChanceQuery);
     }
 
     @RequestMapping("save")
     @ResponseBody
+    @RequirePermission(code = "101002")
     public ResultInfo saveSaleChance(HttpServletRequest request, SaleChance saleChance) {
         //设置创建人名
         saleChance.setCreateMan(userService.selectByPrimaryKey(LoginUserUtil.releaseUserIdFromCookie(request)).getTrueName());
@@ -55,6 +59,7 @@ public class SaleChanceController extends BaseController {
      */
     @RequestMapping("update")
     @ResponseBody
+    @RequirePermission(code = "101004")
     public ResultInfo updateSaleChance( SaleChance saleChance) {
         //调用service层,更新数据
         saleChanceService.updateSaleChance(saleChance);
@@ -69,6 +74,7 @@ public class SaleChanceController extends BaseController {
      */
     @RequestMapping("delete")
     @ResponseBody
+    @RequirePermission(code = "101003")
     public ResultInfo deleteSaleChance( Integer[]ids) {
         //调用service层,删除数据
         saleChanceService.deleteSaleChance(ids);

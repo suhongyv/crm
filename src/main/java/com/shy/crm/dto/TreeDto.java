@@ -5,8 +5,17 @@ package com.shy.crm.dto;
  */
 public class TreeDto {
     private Integer id;
-    private Integer pid;
+    private Integer pId;
     private String name;
+    private Boolean checked=false;
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
 
     public Integer getId() {
         return id;
@@ -16,12 +25,12 @@ public class TreeDto {
         this.id = id;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getpId() {
+        return pId;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 
     public String getName() {

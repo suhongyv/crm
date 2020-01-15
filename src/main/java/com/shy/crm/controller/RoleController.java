@@ -63,4 +63,17 @@ public class RoleController extends BaseController {
         roleService.deleteRole(id);
         return success("删除成功");
     }
+
+    /**
+     * 角色资源授权
+     * @param mids
+     * @param roleId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("role/addGrant")
+    public ResultInfo addGrant(Integer[]mids,Integer roleId){
+        roleService.addGrant(mids,roleId);
+        return success("授权成功");
+    }
 }
